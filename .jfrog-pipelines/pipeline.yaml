@@ -19,6 +19,12 @@ pipelines:
   - name: {{ .Values.var.pipelineName }}
     configuration:
       jfrogCliVersion: '2'                 # optional
+      runtime:
+        type: image
+        image:
+          custom:
+            name: {{ .Values.var.customImage }}
+            tag: {{ .Values.var.customImageTag }}
     steps:
       - name: build
         type: GradleBuild
