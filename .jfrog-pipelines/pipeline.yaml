@@ -1,7 +1,7 @@
 valuesFilePath: ./values.yaml
 
 resources:
-  - name: src_repo
+  - name: {{ .Values.var.pipelineName }}_src_repo
     type: GitRepo
     configuration:
       gitProvider: {{ .Values.var.gitProvider }}
@@ -36,8 +36,7 @@ pipelines:
           failOnScan: false  #optional; default true
           autoPublishBuildInfo: true #optional
           inputResources:
-            - name: src_repo
-            - name:
+            - name: {{ .Values.var.pipelineName }}_src_repo
           outputResources:
             - name: {{ .Values.var.pipelineName }}_build_info
           integrations:
