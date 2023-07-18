@@ -23,8 +23,8 @@ pipelines:
         type: image
         image:
           custom:
-            name: {{ .Values.var.customImage }}
-            tag: {{ .Values.var.customImageTag }}
+            name: '{{ .Values.var.customImage }}'
+            tag: '{{ .Values.var.customImageTag }}'
     steps:
       - name: build
         type: GradleBuild
