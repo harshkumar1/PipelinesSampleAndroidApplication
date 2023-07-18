@@ -24,7 +24,7 @@ pipelines:
         type: GradleBuild
         configuration:
           #inherits all the tags from bash
-          gradleCommand: "./gradlew build" #required
+          gradleCommand: "gradlew build" #required
           #sourceLocation: "app"  #optional
           #configFileLocation: <string>  #optional
           #configFileName: <string>  #optional
