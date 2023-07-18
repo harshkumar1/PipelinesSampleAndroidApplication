@@ -1,0 +1,53 @@
+valuesFilePath: ./values.yaml
+
+resources:
+  - name: src_repo
+    type: GitRepo
+    configuration:
+      gitProvider: {{ .Values.var.gitProvider }}
+      path: {{ .Values.var.path }}
+      branches:
+        include: {{ .Values.var.branches }}
+  - name: {{ .Values.var.pipelineName }}_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: {{ .Values.var.artifactory }}
+      buildName: {{ .Values.var.pipelineName }}
+      buildNumber: ${run_number}
+
+pipelines:
+  - name: {{ .Values.var.pipelineName }}
+    configuration:
+      jfrogCliVersion: '2'                 # optional
+    steps:
+      - name: build
+        type: GradleBuild
+        configuration:
+          #inherits all the tags from bash
+          gradleCommand: "./gradlew build" #required
+          #sourceLocation: "app"  #optional
+          #configFileLocation: <string>  #optional
+          #configFileName: <string>  #optional
+          #resolverRepo: <string>  #optional
+          #deployerRepo: <string>      #optional
+          #usesPlugin: <string>  #optional
+          #useWrapper: <string>      #optional
+          forceXrayScan: true #optional
+          failOnScan: false  #optional; default true
+          autoPublishBuildInfo: true #optional
+          inputResources:
+            - name: src_repo
+            - name:
+          outputResources:
+            - name: {{ .Values.var.pipelineName }}_build_info
+          integrations:
+            - name: {{ .Values.var.artifactory }}
+        execution:
+          onStart:
+            - echo "Preparing for work..."
+          onSuccess:
+            - echo "Job well done!"
+          onFailure:
+            - echo "uh oh, something went wrong"
+          onComplete: #always
+            - echo "Cleaning up some stuff"

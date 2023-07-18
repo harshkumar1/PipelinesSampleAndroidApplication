@@ -1,0 +1,7 @@
+var:
+  pipelineName: android_ci
+  gitProvider: hk_github
+  path: harshkumar1/PipelinesSampleAndroidApplication
+  branches: main
+  artifactory: hk_artifactory_1
+  #repo: ??
