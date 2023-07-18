@@ -25,7 +25,7 @@ pipelines:
         configuration:
           #inherits all the tags from bash
           gradleCommand: "build" #required
-          #sourceLocation: "app"  #optional
+          sourceLocation: "."  #optional
           #configFileLocation: <string>  #optional
           #configFileName: <string>  #optional
           #resolverRepo: <string>  #optional
